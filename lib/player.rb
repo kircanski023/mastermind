@@ -16,13 +16,17 @@ class Player
 
   def select_code
     temp = ""
-    until temp.length == 4
+    until temp.length == 4 && !wrong_input?
       temp = gets.chomp.downcase.chars
-      if temp.length == 4
-        @guess = temp
-      else
-        puts "Wrong input"
-      end
+      @guess = temp
+      puts "Make sure you type A, B, C or D!" if wrong_input?
+      puts "Must type 4 characters" unless temp.length == 4
     end
+  end
+
+  private
+
+  def wrong_input?
+    !@guess.difference(code).empty?
   end
 end

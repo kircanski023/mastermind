@@ -1,4 +1,5 @@
 require_relative "lib/player"
+require_relative "lib/playground"
 
-player = Player.new
-player.select_code
+new_playground = Playground.new
+new_playground.play_game

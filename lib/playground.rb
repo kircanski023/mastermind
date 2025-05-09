@@ -8,16 +8,24 @@ class Playground
     @position = []
     puts "Welcome to Mastermind! \n Guess the CODE by typing 4 characters (a, b ,c, d)"
   end
-  attr_accessor :position, :player
-  attr_reader :code
+  attr_accessor :position, :player, :code
 
   def player_win?
     player_selection == code
   end
 
   def in_position
+    self.position = []
     player_selection.each_index do |index|
       position.push("*") if player_selection[index] == code[index]
+    end
+    puts "[#{position.join('][')}]"
+  end
+
+  def includes
+    self.position = []
+    player_selection.intersection(code).each do |item|
+      position.push("o") * code.count(item)
     end
     puts "[#{position.join('][')}]"
   end
@@ -26,7 +34,7 @@ class Playground
     i = 0
     while i < 12
       @player.select_code
-      self.position = []
+      includes
       in_position
       i += 1
       puts "Choices left #{12 - i}" unless (12 - i).zero?

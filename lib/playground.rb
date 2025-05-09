@@ -5,30 +5,37 @@ class Playground
     @player = Player.new
     @computer = Player.new
     @code = @computer.random_code
-    puts "Welcome to Mastermind! \n Guess the CODE by typing 4 characters (a, b ,c)"
+    @position = []
+    puts "Welcome to Mastermind! \n Guess the CODE by typing 4 characters (a, b ,c, d)"
   end
+  attr_accessor :position, :player
   attr_reader :code
-
-  def player_selection
-    @player.guess
-  end
 
   def player_win?
     player_selection == code
   end
 
-  def in_place?
-    code.each_with_index
+  def in_position
+    player_selection.each_index do |index|
+      position.push("*") if player_selection[index] == code[index]
+    end
+    puts "[#{position.join('][')}]"
   end
 
   def play_game
     i = 0
     while i < 12
       @player.select_code
+      self.position = []
+      in_position
       i += 1
       puts "Choices left #{12 - i}" unless (12 - i).zero?
       puts "Game Over Computer Wins!\n Computer code: #{code.join}" if (12 - i).zero?
       break if player_win?
     end
+  end
+
+  def player_selection
+    @player.guess
   end
 end

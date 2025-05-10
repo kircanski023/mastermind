@@ -6,7 +6,7 @@ class Playground
     @computer = Player.new
     @code = @computer.random_code
     @position = []
-    puts "Welcome to Mastermind! \n Guess the CODE by typing 4 characters (a, b ,c, d)"
+    puts "Welcome to Mastermind! \n Guess the CODE by typing (a, b ,c, d, e)"
   end
   attr_accessor :position, :player, :code
 

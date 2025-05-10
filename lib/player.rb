@@ -12,6 +12,8 @@ class Player
 
   def random_code
     @guess = default.map { |_item| @default.sample }
+    @guess.pop
+    @guess
   end
 
   def select_code
@@ -19,7 +21,7 @@ class Player
     until temp.length == 4 && !wrong_input?
       temp = gets.chomp.downcase.chars
       @guess = temp
-      puts "Make sure you type A, B, C or D!" if wrong_input?
+      puts "Make sure you type A, B, C, D or E!" if wrong_input?
       puts "Must type 4 characters" unless temp.length == 4
     end
   end

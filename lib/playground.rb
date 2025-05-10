@@ -11,6 +11,7 @@ class Playground
   attr_accessor :position, :player, :code
 
   def player_win?
+    puts "You WON!" if player_selection == code
     player_selection == code
   end
 
@@ -19,15 +20,15 @@ class Playground
     player_selection.each_index do |index|
       position.push("*") if player_selection[index] == code[index]
     end
-    puts "[#{position.join('][')}]"
+    puts "[#{position.join('][')}] <- In place"
   end
 
-  def includes
+  def includes # rubocop:disable Metrics/AbcSize
     self.position = []
     player_selection.intersection(code).each do |item|
-      position.push("o") * code.count(item)
+      position << ("o" * [code.count(item), player_selection.count(item)].min) # Correct number of included elements
     end
-    puts "[#{position.join('][')}]"
+    puts "[#{position.join.chars.join('][')}] <- Present"
   end
 
   def play_game

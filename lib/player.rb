@@ -18,6 +18,7 @@ class Player
       puts "Make sure you type A, B, C, D or E!" if wrong_input?
       puts "Must type 4 characters" unless temp.length == 4
     end
+    temp
   end
 
   private

@@ -1,8 +1,14 @@
 # Class Computer
 class Computer < Player
+  def initialize
+    super
+    @radnom = Array.new(4)
+  end
+  attr_accessor :random
+
   def random_code
-    @guess = default.map { |_item| default.sample }
-    @guess.pop
-    @guess
+    self.random = default.shuffle
+    random.pop
+    random
   end
 end

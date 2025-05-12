@@ -3,11 +3,12 @@ class Playground
   def initialize
     @player = Player.new
     @computer = Computer.new
-    @code = @computer.random_code
+    @choice = 0
+    @code = []
     @position = []
     puts "Welcome to Mastermind! \n Guess the CODE by typing (a, b ,c, d, e)"
   end
-  attr_accessor :position, :player, :code
+  attr_accessor :position, :player, :code, :choice
 
   def player_win?
     puts "You WON!" if player_selection == code
@@ -31,23 +32,45 @@ class Playground
   end
 
   def start_game
-    @player.select_code
+    puts "Make a choice: \n1. Code Maker 2. Code Breaker"
+    self.choice = gets.chomp.to_i
+    if choice == 1
+      puts "YOU are The Code Maker Select your code using (a, b, c, d, e)"
+      self.code = player.select_code
+    elsif choice == 2
+      puts "OK, The code is ready! You can guess now!"
+      self.code = @computer.random_code
+    end
+  end
+
+  def selection
+    puts "It's your turn"
+    if choice == 1
+      p @computer.random_code
+    elsif choice == 2
+      player.select_code
+    end
     includes
     in_position
   end
 
   def play_game
+    start_game
     i = 0
     while i < 12
-      start_game
+      selection
       i += 1
       puts "Choices left #{12 - i}" unless (12 - i).zero?
-      puts "Game Over Computer Wins!\n Computer code: #{code.join}" if (12 - i).zero?
+      puts "Game Over!\n Secret Code: #{code.join}" if (12 - i).zero?
       break if player_win?
     end
   end
 
   def player_selection
-    @player.guess
+    if choice == 2
+      @player.guess
+    elsif choice == 1
+      @computer.random
+    end
   end
 end

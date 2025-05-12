@@ -30,12 +30,16 @@ class Playground
     puts "[#{position.join.chars.join('][')}] <- Present"
   end
 
+  def start_game
+    @player.select_code
+    includes
+    in_position
+  end
+
   def play_game
     i = 0
     while i < 12
-      @player.select_code
-      includes
-      in_position
+      start_game
       i += 1
       puts "Choices left #{12 - i}" unless (12 - i).zero?
       puts "Game Over Computer Wins!\n Computer code: #{code.join}" if (12 - i).zero?

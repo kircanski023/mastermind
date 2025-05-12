@@ -2,7 +2,8 @@
 class Playground
   def initialize
     @player = Player.new
-    @code = @player.random_code
+    @computer = Computer.new
+    @code = @computer.random_code
     @position = []
     puts "Welcome to Mastermind! \n Guess the CODE by typing (a, b ,c, d, e)"
   end

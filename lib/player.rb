@@ -10,12 +10,6 @@ class Player
   end
   attr_reader :default, :guess
 
-  def random_code
-    @guess = default.map { |_item| @default.sample }
-    @guess.pop
-    @guess
-  end
-
   def select_code
     temp = ""
     until temp.length == 4 && !wrong_input?

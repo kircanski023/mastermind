@@ -3,12 +3,13 @@ class Playground
   def initialize
     @player = Player.new
     @computer = Computer.new
+    @result = Array.new(4)
     @choice = 0
     @code = []
     @position = []
     puts "Welcome to Mastermind! \n Guess the CODE by typing (a, b ,c, d, e)"
   end
-  attr_accessor :position, :player, :code, :choice
+  attr_accessor :position, :player, :code, :choice, :result
 
   def player_win?
     puts "You WON!" if player_selection == code
@@ -31,9 +32,12 @@ class Playground
     puts "[#{position.join.chars.join('][')}] <- Present"
   end
 
-  def start_game
+  def start_game # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     puts "Make a choice: \n1. Code Maker 2. Code Breaker"
-    self.choice = gets.chomp.to_i
+    until [1, 2].include?(choice)
+      puts "Please enter 1 or 2!"
+      self.choice = gets.chomp.to_i
+    end
     if choice == 1
       puts "YOU are The Code Maker Select your code using (a, b, c, d, e)"
       self.code = player.select_code
@@ -46,7 +50,7 @@ class Playground
   def selection
     puts "It's your turn"
     if choice == 1
-      p @computer.random_code
+      save_selection
     elsif choice == 2
       player.select_code
     end
@@ -71,6 +75,19 @@ class Playground
       @player.guess
     elsif choice == 1
       @computer.random
+    end
+  end
+
+  def save_selection # rubocop:disable Metrics/AbcSize
+    @computer.random_code
+    @computer.random.each_with_index do |item, index|
+      result.fill(item, index, 1) if @computer.random[index] == code[index]
+    end
+    if result.all? == true
+      puts "Computer Wins"
+      p @computer.random = result
+    else
+      p @computer.random
     end
   end
 end
